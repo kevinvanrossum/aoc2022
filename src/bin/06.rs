@@ -2,20 +2,26 @@ use itertools::Itertools;
 
 pub fn part_one(input: &str) -> Option<u32> {
     let char_vec = input.trim().chars().collect_vec();
-    let result = char_vec.windows(4).enumerate()
-            .filter(|(_, window)| window.into_iter().all_unique())
-            .map(|(i, _)| i + 4)
-            .next().unwrap() as u32;
+    let result = char_vec
+        .windows(4)
+        .enumerate()
+        .filter(|(_, window)| window.into_iter().all_unique())
+        .map(|(i, _)| i + 4)
+        .next()
+        .unwrap() as u32;
 
     Some(result)
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
     let char_vec = input.trim().chars().collect_vec();
-    let result = char_vec.windows(14).enumerate()
-            .filter(|(_, window)| window.into_iter().all_unique())
-            .map(|(i, _)| i + 14)
-            .next().unwrap() as u32;
+    let result = char_vec
+        .windows(14)
+        .enumerate()
+        .filter(|(_, window)| window.into_iter().all_unique())
+        .map(|(i, _)| i + 14)
+        .next()
+        .unwrap() as u32;
 
     Some(result)
 }

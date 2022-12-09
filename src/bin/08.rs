@@ -2,7 +2,9 @@ use itertools::Itertools;
 
 pub fn part_one(input: &str) -> Option<u32> {
     let lines = input.lines();
-    let grid = lines.map(|line| line.chars().map(|c| c.to_digit(10).unwrap()).collect_vec()).collect_vec();
+    let grid = lines
+        .map(|line| line.chars().map(|c| c.to_digit(10).unwrap()).collect_vec())
+        .collect_vec();
     // let mut visible = 0;
 
     // for row_index in 0..grid.len() {
@@ -25,16 +27,18 @@ pub fn part_one(input: &str) -> Option<u32> {
 
     // After learning about cartesian product and borrowing :)
 
-    let visible_from_outside = (grid.len() - 1) * 4; 
+    let visible_from_outside = (grid.len() - 1) * 4;
     // Skipping outside border these are alawys visible
-    let visible_in_inner_grid = (1..grid.len() - 1) 
+    let visible_in_inner_grid = (1..grid.len() - 1)
         .cartesian_product(1..grid.len() - 1)
         .map(|(y, x)| {
             let current_tree = grid[y][x];
             get_neigbor_rows(&grid, x, y)
                 .iter()
                 .map(|direction| {
-                    direction.iter().all(|neighour_tree| *neighour_tree < current_tree)
+                    direction
+                        .iter()
+                        .all(|neighour_tree| *neighour_tree < current_tree)
                 })
                 .any(|visible| visible)
         })
@@ -43,7 +47,7 @@ pub fn part_one(input: &str) -> Option<u32> {
 
     Some((visible_from_outside + visible_in_inner_grid) as u32)
 
-   // Some(visible)
+    // Some(visible)
 }
 
 fn get_neigbor_rows(grid: &[Vec<u32>], x: usize, y: usize) -> [Vec<u32>; 4] {
@@ -62,26 +66,29 @@ fn get_neigbor_rows(grid: &[Vec<u32>], x: usize, y: usize) -> [Vec<u32>; 4] {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    let grid = input.lines().map(|line| line.chars().map(|c| c.to_digit(10).unwrap()).collect_vec()).collect_vec();
-    
-    let scenic_scores = (1..grid.len() - 1) 
+    let grid = input
+        .lines()
+        .map(|line| line.chars().map(|c| c.to_digit(10).unwrap()).collect_vec())
+        .collect_vec();
+
+    let scenic_scores = (1..grid.len() - 1)
         .cartesian_product(1..grid.len() - 1)
         .map(|(y, x)| {
             let current_tree = grid[y][x];
             get_neigbor_rows(&grid, x, y)
-            .iter()
-            .map(|direction| {
-                direction
-                    .iter()
-                    .position(|neighbour_tree| *neighbour_tree >= current_tree)
-                    // add 1 to the neighbour location for seeing distance
-                    .map(|blocking_neighour| blocking_neighour + 1)
-                    .unwrap_or_else(|| direction.len()) as u32
-            })
-            .product::<u32>()
+                .iter()
+                .map(|direction| {
+                    direction
+                        .iter()
+                        .position(|neighbour_tree| *neighbour_tree >= current_tree)
+                        // add 1 to the neighbour location for seeing distance
+                        .map(|blocking_neighour| blocking_neighour + 1)
+                        .unwrap_or_else(|| direction.len()) as u32
+                })
+                .product::<u32>()
         });
 
-        Some(scenic_scores.max().unwrap())
+    Some(scenic_scores.max().unwrap())
 }
 
 fn main() {
@@ -103,6 +110,6 @@ mod tests {
     #[test]
     fn test_part_two() {
         let input = advent_of_code::read_file("examples", 8);
-        assert_eq!(part_two(&input), None);
+        assert_eq!(part_two(&input), Some(8));
     }
 }

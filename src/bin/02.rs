@@ -1,5 +1,3 @@
-use itertools::Itertools;
-
 pub fn part_one(input: &str) -> Option<u32> {
     let mut total: u32 = 0;
 
@@ -15,21 +13,21 @@ pub fn part_one(input: &str) -> Option<u32> {
                 'X' => 4,
                 'Y' => 8,
                 'Z' => 3,
-                _ => 0
+                _ => 0,
             },
             'B' => match my_move {
                 'X' => 1,
                 'Y' => 5,
                 'Z' => 9,
-                _ => 0
+                _ => 0,
             },
             'C' => match my_move {
                 'X' => 7,
                 'Y' => 2,
                 'Z' => 6,
-                _ => 0
+                _ => 0,
             },
-            _ => 0
+            _ => 0,
         }
     }
 
@@ -51,21 +49,21 @@ pub fn part_two(input: &str) -> Option<u32> {
                 'X' => 3,
                 'Y' => 4,
                 'Z' => 8,
-                _ => 0
+                _ => 0,
             },
             'B' => match my_move {
                 'X' => 1,
                 'Y' => 5,
                 'Z' => 9,
-                _ => 0
+                _ => 0,
             },
             'C' => match my_move {
                 'X' => 2,
                 'Y' => 6,
                 'Z' => 7,
-                _ => 0
+                _ => 0,
             },
-            _ => 0
+            _ => 0,
         }
     }
 
@@ -85,12 +83,12 @@ mod tests {
     #[test]
     fn test_part_one() {
         let input = advent_of_code::read_file("examples", 2);
-        assert_eq!(part_one(&input), None);
+        assert_eq!(part_one(&input), Some(15));
     }
 
     #[test]
     fn test_part_two() {
         let input = advent_of_code::read_file("examples", 2);
-        assert_eq!(part_two(&input), None);
+        assert_eq!(part_two(&input), Some(12));
     }
 }

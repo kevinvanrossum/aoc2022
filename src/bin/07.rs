@@ -1,4 +1,7 @@
-use std::{collections::HashMap, path::{PathBuf, Path}};
+use std::{
+    collections::HashMap,
+    path::{PathBuf},
+};
 
 fn input_to_sizes(input: &str) -> HashMap<PathBuf, u32> {
     let lines = input.lines();
@@ -12,11 +15,11 @@ fn input_to_sizes(input: &str) -> HashMap<PathBuf, u32> {
 
         let command_parts: Vec<_> = line.split_whitespace().collect();
         match command_parts[..] {
-            ["$","cd", ".."] => {
+            ["$", "cd", ".."] => {
                 // stepping out of directory
                 visited_paths.pop();
             }
-            ["$","cd", name] => {
+            ["$", "cd", name] => {
                 // stepping in to directory
                 //println!("Current path: {}", name);
                 visited_paths.push(name);
@@ -43,8 +46,6 @@ fn input_to_sizes(input: &str) -> HashMap<PathBuf, u32> {
                     let stored_path = paths_with_sizes.entry(path).or_insert(0);
                     *stored_path += size.parse::<u32>().unwrap();
                 }
-            
-
             }
             _ => {}
         };
@@ -54,22 +55,21 @@ fn input_to_sizes(input: &str) -> HashMap<PathBuf, u32> {
     paths_with_sizes
 }
 
-
 pub fn part_one(input: &str) -> Option<u32> {
     let paths_with_sizes = input_to_sizes(input);
-   
-     //println!("Number of total paths {}", paths_with_sizes.len());
+
+    //println!("Number of total paths {}", paths_with_sizes.len());
     // for path in paths_with_sizes.clone().into_keys() {
     //     println!("All paths: {}", path.to_str().unwrap())
     // }
 
-    let sum_of_paths_smaller_then_100000 = paths_with_sizes.into_values()
+    let sum_of_paths_smaller_then_100000 = paths_with_sizes
+        .into_values()
         .filter(|size| size.to_owned() <= 100000)
         .sum::<u32>();
-    
+
     Some(sum_of_paths_smaller_then_100000)
 }
-
 
 pub fn part_two(input: &str) -> Option<u32> {
     let paths_with_sizes = input_to_sizes(input);
@@ -78,10 +78,10 @@ pub fn part_two(input: &str) -> Option<u32> {
     let used_total = paths_with_sizes.get(&root_path).unwrap();
     let available_total = 70000000 - used_total;
 
-    let smallest_size_to_delete = paths_with_sizes.into_values()
+    let smallest_size_to_delete = paths_with_sizes
+        .into_values()
         .filter(|size| available_total + size >= 30000000)
         .min();
-        
 
     smallest_size_to_delete
 }
@@ -99,12 +99,12 @@ mod tests {
     #[test]
     fn test_part_one() {
         let input = advent_of_code::read_file("examples", 7);
-        assert_eq!(part_one(&input), None);
+        assert_eq!(part_one(&input), Some(95437));
     }
 
     #[test]
     fn test_part_two() {
         let input = advent_of_code::read_file("examples", 7);
-        assert_eq!(part_two(&input), None);
+        assert_eq!(part_two(&input), Some(24933642));
     }
 }
