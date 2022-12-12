@@ -34,7 +34,7 @@ impl Monke {
 
             let new_worry_level = new_worry_level %  shared_multiple;
             if verbose {
-                println!("    Monkey gets bored with item. Worry level mod {modulo} to {}.", new_worry_level);
+                println!("    Monkey gets bored with item. Worry level mod {shared_multiple} to {}.", new_worry_level);
             }
 
             let new_worry_level = new_worry_level / 3;
